@@ -1,16 +1,18 @@
 package br.com.eletra.offenders.services;
 
-import br.com.eletra.offenders.dtos.CreateAppointmentDto;
-import br.com.eletra.offenders.entities.AppointmentEntity;
+import br.com.eletra.offenders.dtos.appointment.AppointmentDto;
+import br.com.eletra.offenders.dtos.appointment.CreateAppointmentDto;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface AppointmentService {
-    List<AppointmentEntity> findAll();
+    List<AppointmentDto> findAll();
 
-    Optional<AppointmentEntity> findById(UUID id);
+    Optional<AppointmentDto> findById(UUID id);
 
-    AppointmentEntity create(CreateAppointmentDto createAppointmentDto);
+    AppointmentDto create(CreateAppointmentDto createAppointmentDto);
+
+    List<AppointmentDto> bulkCreate(List<CreateAppointmentDto> createAppointmentDto);
 }

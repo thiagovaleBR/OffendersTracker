@@ -1,11 +1,13 @@
 package br.com.eletra.offenders.services.impl;
 
-import br.com.eletra.offenders.dtos.CreateAppointmentDto;
-import br.com.eletra.offenders.entities.AppointmentEntity;
+import br.com.eletra.offenders.dtos.appointment.AppointmentDto;
+import br.com.eletra.offenders.dtos.appointment.CreateAppointmentDto;
+import br.com.eletra.offenders.mappers.AppointmentMapper;
 import br.com.eletra.offenders.repositories.AppointmentRepository;
 import br.com.eletra.offenders.repositories.AreaRepository;
 import br.com.eletra.offenders.repositories.LineRepository;
 import br.com.eletra.offenders.services.AppointmentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,27 +22,25 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final LineRepository lineRepository;
     private final AreaRepository areaRepository;
+    private final AppointmentMapper appointmentMapper;
 
-    public List<AppointmentEntity> findAll() {
-        return appointmentRepository.findAll();
+    public List<AppointmentDto> findAll() {
+        return appointmentRepository.findAll().stream().map(appointmentMapper::toAppointmentDto).toList();
     }
 
-    public Optional<AppointmentEntity> findById(UUID id) {
-        return appointmentRepository.findById(id);
+    public Optional<AppointmentDto> findById(UUID id) {
+        return appointmentRepository.findById(id).map(appointmentMapper::toAppointmentDto);
     }
 
-    public AppointmentEntity create(CreateAppointmentDto createAppointmentDto) {
-        var appointment = new AppointmentEntity();
+    public AppointmentDto create(CreateAppointmentDto createAppointmentDto) {
         var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
         var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
-        appointment.setDate(createAppointmentDto.getDate());
-        appointment.setLine(line);
-        appointment.setOffender(offender);
-        appointment.setStartTime(createAppointmentDto.getStartTime());
-        appointment.setEndTime(createAppointmentDto.getEndTime());
-        appointment.setDescription(createAppointmentDto.getDescription());
-        appointment.setTicketId(createAppointmentDto.getTicketId());
-        appointment.setAppointer(createAppointmentDto.getAppointer());
-        return appointmentRepository.save(appointment);
+        var appointment = appointmentMapper.toEntity(createAppointmentDto, line, offender);
+        appointmentRepository.save(appointment);
+        return appointmentMapper.toAppointmentDto(appointment);
+    }
+    @Transactional
+    public List<AppointmentDto> bulkCreate(List<CreateAppointmentDto> createAppointmentDtoList) {
+        return createAppointmentDtoList.stream().map(this::create).toList();
     }
 }
