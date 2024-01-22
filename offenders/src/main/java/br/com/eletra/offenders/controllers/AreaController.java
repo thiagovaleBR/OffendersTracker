@@ -28,6 +28,6 @@ public class AreaController {
     public ResponseEntity<AreaEntity> getAreaById(@PathVariable UUID id) {
         var area = areaService.findById(id);
         return area.map(value -> ResponseEntity.status(HttpStatus.OK).body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());
     }
 }

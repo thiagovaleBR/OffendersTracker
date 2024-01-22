@@ -28,7 +28,7 @@ public class AppointmentController {
     public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable UUID id) {
         var appointment = appointmentService.findById(id);
         return appointment.map(value -> ResponseEntity.status(HttpStatus.OK).body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());
     }
 
     @PostMapping

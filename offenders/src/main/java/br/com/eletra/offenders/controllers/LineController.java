@@ -29,7 +29,7 @@ public class LineController {
     public ResponseEntity<LineEntity> getAreaById(@PathVariable UUID id) {
         var line = lineService.findById(id);
         return line.map(value -> ResponseEntity.status(HttpStatus.OK).body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());
     }
 
 }
