@@ -1,4 +1,4 @@
-package br.com.eletra.offenders.dtos;
+package br.com.eletra.offenders.dtos.appointment;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -21,7 +21,6 @@ public class CreateAppointmentDto  {
     private LocalTime endTime;
     @NotNull
     private String description;
-    @NotNull
     private Long ticketId;
     @NotNull
     private String appointer;
