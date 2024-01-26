@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,12 +45,15 @@ public class AppointmentServiceImpl implements AppointmentService {
         return createAppointmentDtoList.stream().map(this::create).toList();
     }
 
-public AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto) {
-        var appointment = appointmentRepository.findById(id).orElseThrow();
-        var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
-        var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
-        appointmentMapper.updateEntity(appointment, createAppointmentDto, line, offender);
-        appointmentRepository.save(appointment);
-        return appointmentMapper.toAppointmentDto(appointment);
+    public AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto) {
+            var appointment = appointmentRepository.findById(id).orElseThrow();
+            var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
+            var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
+            appointmentMapper.updateEntity(appointment, createAppointmentDto, line, offender);
+            appointmentRepository.save(appointment);
+            return appointmentMapper.toAppointmentDto(appointment);
+        }
+    public List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date) {
+        return appointmentRepository.findByLineIdAndDate(lineId, date).stream().map(appointmentMapper::toAppointmentDto).toList();
     }
 }
