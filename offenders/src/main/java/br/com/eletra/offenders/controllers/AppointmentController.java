@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +34,15 @@ public class AppointmentController {
 
     @PostMapping
     public ResponseEntity<List<AppointmentDto>> createAppointment(@RequestBody @Valid List<CreateAppointmentDto> createAppointmentDtoList) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.bulkCreate(createAppointmentDtoList));
+        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.create(createAppointmentDtoList));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDto> update(@PathVariable UUID id, @RequestBody @Valid CreateAppointmentDto createAppointmentDto) {
+        Optional<AppointmentDto> appointment = appointmentService.findById(id);
+        if (appointment.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.update(id, createAppointmentDto));
     }
 }

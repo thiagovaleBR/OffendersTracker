@@ -35,12 +35,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     public AppointmentDto create(CreateAppointmentDto createAppointmentDto) {
         var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
         var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
-        var appointment = appointmentMapper.toEntity(createAppointmentDto, line, offender);
+        var appointment = appointmentMapper.createEntity(createAppointmentDto, line, offender);
         appointmentRepository.save(appointment);
         return appointmentMapper.toAppointmentDto(appointment);
     }
     @Transactional
-    public List<AppointmentDto> bulkCreate(List<CreateAppointmentDto> createAppointmentDtoList) {
+    public List<AppointmentDto> create(List<CreateAppointmentDto> createAppointmentDtoList) {
         return createAppointmentDtoList.stream().map(this::create).toList();
+    }
+
+public AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto) {
+        var appointment = appointmentRepository.findById(id).orElseThrow();
+        var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
+        var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
+        appointmentMapper.updateEntity(appointment, createAppointmentDto, line, offender);
+        appointmentRepository.save(appointment);
+        return appointmentMapper.toAppointmentDto(appointment);
     }
 }

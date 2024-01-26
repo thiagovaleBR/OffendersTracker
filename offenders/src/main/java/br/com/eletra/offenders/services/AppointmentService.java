@@ -12,7 +12,7 @@ public interface AppointmentService {
 
     Optional<AppointmentDto> findById(UUID id);
 
-    AppointmentDto create(CreateAppointmentDto createAppointmentDto);
+    List<AppointmentDto> create(List<CreateAppointmentDto> createAppointmentDto);
 
-    List<AppointmentDto> bulkCreate(List<CreateAppointmentDto> createAppointmentDto);
+    AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto);
 }
