@@ -3,11 +3,13 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "8080:8081"
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/offendertracker
+      - DATABASE_URL=jdbc:postgresql://db:5432/offendertracker
+      - DB_USER=postgres
+      - DB_PASSWORD=senha123
 
   db:
     image: postgres
