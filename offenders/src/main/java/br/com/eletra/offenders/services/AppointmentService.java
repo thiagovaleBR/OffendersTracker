@@ -18,4 +18,6 @@ public interface AppointmentService {
     AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto);
 
     List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date);
+
+    List<AppointmentDto> findByDate(LocalDate date);
 }

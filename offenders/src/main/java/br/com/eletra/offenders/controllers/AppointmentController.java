@@ -38,6 +38,13 @@ public class AppointmentController {
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByLineAndDate(lineId, date));
     }
 
+    @GetMapping("/date")
+    public ResponseEntity<List<AppointmentDto>> getAppointmentsByDate(@RequestParam LocalDate date) {
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentService.findByDate(date));
+    }
+
+
+
     @PostMapping
     public ResponseEntity<List<AppointmentDto>> createAppointment(@RequestBody @Valid List<CreateAppointmentDto> createAppointmentDtoList) {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentService.create(createAppointmentDtoList));

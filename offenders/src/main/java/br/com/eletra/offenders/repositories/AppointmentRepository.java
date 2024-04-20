@@ -11,4 +11,6 @@ import java.util.UUID;
 @Repository
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, UUID> {
     List<AppointmentEntity> findByLineIdAndDate(UUID lineId, LocalDate date);
+
+    List<AppointmentEntity> findByDate(LocalDate date);
 }

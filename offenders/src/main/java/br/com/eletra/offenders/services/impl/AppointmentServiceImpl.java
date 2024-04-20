@@ -56,4 +56,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date) {
         return appointmentRepository.findByLineIdAndDate(lineId, date).stream().map(appointmentMapper::toAppointmentDto).toList();
     }
+    public List<AppointmentDto> findByDate(LocalDate date) {
+        return appointmentRepository.findByDate(date).stream().map(appointmentMapper::toAppointmentDto).toList();
+    }
 }
