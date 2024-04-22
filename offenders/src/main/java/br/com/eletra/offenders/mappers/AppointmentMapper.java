@@ -28,8 +28,12 @@ public class AppointmentMapper {
         return appointmentDto;
     }
 
-    public AppointmentEntity toEntity(CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender) {
+    public AppointmentEntity createEntity(CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender) {
         var appointment = new AppointmentEntity();
+        return updateEntity(appointment, createAppointmentDto, line, offender);
+    }
+
+    public AppointmentEntity updateEntity (AppointmentEntity appointment, CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender) {
         appointment.setDate(createAppointmentDto.getDate());
         appointment.setLine(line);
         appointment.setOffender(offender);

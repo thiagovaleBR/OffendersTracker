@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,12 +36,27 @@ public class AppointmentServiceImpl implements AppointmentService {
     public AppointmentDto create(CreateAppointmentDto createAppointmentDto) {
         var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
         var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
-        var appointment = appointmentMapper.toEntity(createAppointmentDto, line, offender);
+        var appointment = appointmentMapper.createEntity(createAppointmentDto, line, offender);
         appointmentRepository.save(appointment);
         return appointmentMapper.toAppointmentDto(appointment);
     }
     @Transactional
-    public List<AppointmentDto> bulkCreate(List<CreateAppointmentDto> createAppointmentDtoList) {
+    public List<AppointmentDto> create(List<CreateAppointmentDto> createAppointmentDtoList) {
         return createAppointmentDtoList.stream().map(this::create).toList();
+    }
+
+    public AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto) {
+            var appointment = appointmentRepository.findById(id).orElseThrow();
+            var line = lineRepository.findById(createAppointmentDto.getLineId()).orElseThrow();
+            var offender = areaRepository.findById(createAppointmentDto.getOffenderId()).orElseThrow();
+            appointmentMapper.updateEntity(appointment, createAppointmentDto, line, offender);
+            appointmentRepository.save(appointment);
+            return appointmentMapper.toAppointmentDto(appointment);
+        }
+    public List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date) {
+        return appointmentRepository.findByLineIdAndDate(lineId, date).stream().map(appointmentMapper::toAppointmentDto).toList();
+    }
+    public List<AppointmentDto> findByDate(LocalDate date) {
+        return appointmentRepository.findByDate(date).stream().map(appointmentMapper::toAppointmentDto).toList();
     }
 }
