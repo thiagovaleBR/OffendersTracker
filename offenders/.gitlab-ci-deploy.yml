@@ -10,6 +10,5 @@ deploy_dev:
   when: manual
   environment:
     name: Develop
-    url: http://shanghai:8380/swagger-ui.html
   only:
     - develop
