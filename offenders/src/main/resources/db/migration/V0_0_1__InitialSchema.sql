@@ -31,7 +31,7 @@ create table appointments (
     start_time time not null,
     end_time time not null,
     description text not null,
-    ticketId bigint,
+    ticket_id bigint,
     appointer varchar(30) not null,
     created_by varchar(30) not null,
     updated_by varchar(30) not null,
