@@ -1,0 +1,16 @@
+offenders-module-test:
+  image: maven:3.8-openjdk-17-slim
+  tags:
+    - docker
+  stage: test
+  retry: 2
+  script:
+    - cd offenders.manager
+    - mvn -Dmaven.repo.local=/.m2 -f pom.xml test
+    - cat  target/site/jacoco/index.html
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - offenders.manager/target/surefire-reports/TEST-*.xml
+        - offenders.manager/target/failsafe-reports/TEST-*.xml

@@ -12,9 +12,10 @@
 	<artifactId>offenders</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>offenders</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Offenders Tracker</description>
 	<properties>
 		<java.version>17</java.version>
+		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 	</properties>
 	<dependencies>
 		<dependency>

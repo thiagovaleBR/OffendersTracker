@@ -1,0 +1,14 @@
+offenders-module-build:
+  tags:
+    - docker
+  stage: image
+  script:
+    - apk add git
+    - cd offenders.manager
+    - docker build -t 10.160.0.59:5443/eletra_ecs/offenders_manager:$CI_COMMIT_BRANCH .
+    - docker push 10.160.0.59:5443/eletra_ecs/offenders_manager:$CI_COMMIT_BRANCH
+  retry: 2
+  only:
+    refs:
+      - develop
+      - master

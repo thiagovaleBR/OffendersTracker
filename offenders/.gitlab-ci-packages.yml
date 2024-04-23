@@ -1,0 +1,12 @@
+offenders-module-package:
+  image: maven:3.8-openjdk-17-slim
+  tags:
+    - docker
+  stage: package
+  script:
+    - cd offenders.manager
+    - mvn -Dmaven.repo.local=/.m2 -f pom.xml -Dmaven.test.skip=true package
+  artifacts:
+    when: always
+    paths:
+      - Offenders.manager/target/*.jar

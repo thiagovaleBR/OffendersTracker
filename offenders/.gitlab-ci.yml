@@ -1,0 +1,25 @@
+image: 10.160.0.59:5443/docker:latest
+
+stages:
+  - test
+  - quality
+  - package
+  - image
+  - deploy
+
+default:
+  tags:
+    - docker
+  before_script:
+    - export CI_COMMIT_BRANCH=${CI_COMMIT_BRANCH//\//-}
+    - export CI_COMMIT_BRANCH=${CI_COMMIT_BRANCH//master/latest}
+  after_script:
+    - docker system prune -f
+
+
+include:
+  - '.gitlab-ci-tests.yml'
+  - '.gitlab-ci-quality.yml'
+  - '.gitlab-ci-images.yml'
+  - '.gitlab-ci-packages.yml'
+  - '.gitlab-ci-deploy.yml'

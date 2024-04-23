@@ -1,0 +1,15 @@
+deploy_dev:
+  stage: deploy
+  tags:
+    - shanghai
+  script:
+    - apk add --no-cache docker-compose
+    - cp $DOCKER_COMPOSE_FILE docker-compose.yml
+    - docker-compose pull
+    - docker-compose --compatibility up -d
+  when: manual
+  environment:
+    name: Develop
+    url: http://shanghai:8380/swagger-ui.html
+  only:
+    - develop
