@@ -15,13 +15,14 @@ import java.util.UUID;
 public class AreaServiceImpl implements AreaService {
 
     private final AreaRepository areaRepository;
+    private final AreaMapper areaMapper;
 
 
     public List<AreaDto> findAll() {
-        return areaRepository.findAll().stream().map(AreaMapper::toAreaDto).toList();
+        return areaRepository.findAll().stream().map(areaMapper::toAreaDto).toList();
     }
 
     public Optional<AreaDto> findById(UUID id) {
-        return areaRepository.findById(id).map(AreaMapper::toAreaDto);
+        return areaRepository.findById(id).map(areaMapper::toAreaDto);
     }
 }

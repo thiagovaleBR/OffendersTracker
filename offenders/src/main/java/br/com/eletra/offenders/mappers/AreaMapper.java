@@ -12,7 +12,9 @@ public class AreaMapper {
 
     public AreaDto toAreaDto(AreaEntity areaEntity) {
         AreaDto areaDto = new AreaDto();
-        areaDto.setId(areaEntity.getId());
+        IdAndNameDto idAndNameDto = new IdAndNameDto();
+        idAndNameDto.setId(areaEntity.getId());
+        areaDto.setName(areaEntity.getName());
 
         return areaDto;
     }
