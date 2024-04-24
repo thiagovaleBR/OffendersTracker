@@ -1,6 +1,7 @@
 package br.com.eletra.offenders.services.impl;
 
-import br.com.eletra.offenders.entities.AreaEntity;
+import br.com.eletra.offenders.dtos.area.AreaDto;
+import br.com.eletra.offenders.mappers.AreaMapper;
 import br.com.eletra.offenders.repositories.AreaRepository;
 import br.com.eletra.offenders.services.AreaService;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +15,13 @@ import java.util.UUID;
 public class AreaServiceImpl implements AreaService {
 
     private final AreaRepository areaRepository;
-    @Override
-    public List<AreaEntity> findAll() {
-        return areaRepository.findAll();
+
+
+    public List<AreaDto> findAll() {
+        return areaRepository.findAll().stream().map(AreaMapper::toAreaDto).toList();
     }
 
-    @Override
-    public Optional<AreaEntity> findById(UUID id) {
-        return areaRepository.findById(id);
+    public Optional<AreaDto> findById(UUID id) {
+        return areaRepository.findById(id).map(AreaMapper::toAreaDto);
     }
 }
