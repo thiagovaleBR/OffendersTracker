@@ -15,7 +15,6 @@ public class AreaMapper {
         IdAndNameDto idAndNameDto = new IdAndNameDto();
         idAndNameDto.setId(areaEntity.getId());
         areaDto.setName(areaEntity.getName());
-
         return areaDto;
     }
 
