@@ -1,6 +1,7 @@
 package br.com.eletra.offenders.controllers;
 
 
+import br.com.eletra.offenders.dtos.line.LineDto;
 import br.com.eletra.offenders.entities.LineEntity;
 import br.com.eletra.offenders.services.LineService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,12 @@ public class LineController {
 
     private final LineService lineService;
     @GetMapping
-    public ResponseEntity<List<LineEntity>> getAllAreas() {
+    public ResponseEntity<List<LineDto>> getAllAreas() {
         return ResponseEntity.status(HttpStatus.OK).body(lineService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LineEntity> getAreaById(@PathVariable UUID id) {
+    public ResponseEntity<LineDto> getAreaById(@PathVariable UUID id) {
         var line = lineService.findById(id);
         return line.map(value -> ResponseEntity.status(HttpStatus.OK).body(value))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());

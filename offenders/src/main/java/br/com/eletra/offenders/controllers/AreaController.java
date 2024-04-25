@@ -1,6 +1,6 @@
 package br.com.eletra.offenders.controllers;
 
-import br.com.eletra.offenders.entities.AreaEntity;
+import br.com.eletra.offenders.dtos.area.AreaDto;
 import br.com.eletra.offenders.services.AreaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,12 +20,12 @@ public class AreaController {
 
     private final AreaService areaService;
     @GetMapping
-    public ResponseEntity<List<AreaEntity>> getAllAreas() {
+    public ResponseEntity<List<AreaDto>> getAllAreas() {
         return ResponseEntity.status(HttpStatus.OK).body(areaService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AreaEntity> getAreaById(@PathVariable UUID id) {
+    public ResponseEntity<AreaDto> getAreaById(@PathVariable UUID id) {
         var area = areaService.findById(id);
         return area.map(value -> ResponseEntity.status(HttpStatus.OK).body(value))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NO_CONTENT).build());

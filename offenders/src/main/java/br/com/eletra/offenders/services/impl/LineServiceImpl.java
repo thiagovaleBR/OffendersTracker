@@ -1,6 +1,7 @@
 package br.com.eletra.offenders.services.impl;
 
-import br.com.eletra.offenders.entities.LineEntity;
+import br.com.eletra.offenders.dtos.line.LineDto;
+import br.com.eletra.offenders.mappers.LineMapper;
 import br.com.eletra.offenders.repositories.LineRepository;
 import br.com.eletra.offenders.services.LineService;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +16,17 @@ import java.util.UUID;
 public class LineServiceImpl implements LineService {
 
     private final LineRepository lineRepository;
+    private final LineMapper lineMapper;
 
 
     @Override
-    public List<LineEntity> findAll() {
-        return lineRepository.findAll();
+    public List<LineDto> findAll() {
+        return lineRepository.findAll().stream().map(lineMapper::toLineDto).toList();
+
     }
 
     @Override
-    public Optional<LineEntity> findById(UUID id) {
-        return lineRepository.findById(id);
+    public Optional<LineDto> findById(UUID id) {
+        return lineRepository.findById(id).map(lineMapper::toLineDto);
     }
 }

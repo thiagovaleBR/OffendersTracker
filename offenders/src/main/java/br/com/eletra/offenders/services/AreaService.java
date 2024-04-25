@@ -1,6 +1,6 @@
 package br.com.eletra.offenders.services;
 
-import br.com.eletra.offenders.entities.AreaEntity;
+import br.com.eletra.offenders.dtos.area.AreaDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface AreaService  {
 
-    List<AreaEntity> findAll();
+    List<AreaDto> findAll();
 
-    Optional<AreaEntity> findById(UUID id);
+    Optional<AreaDto> findById(UUID id);
 }
