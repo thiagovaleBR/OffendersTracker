@@ -19,10 +19,12 @@ public class AreaServiceImpl implements AreaService {
 
 
     public List<AreaDto> findAll() {
-        return areaRepository.findAll().stream().map(areaMapper::toAreaDto).toList();
+        var entityList = areaRepository.findAll();
+        return areaMapper.toAreaDto(entityList);
     }
 
     public Optional<AreaDto> findById(UUID id) {
-        return areaRepository.findById(id).map(areaMapper::toAreaDto);
+        var entityList = areaRepository.findById(id).orElse(null);
+        return Optional.ofNullable(areaMapper.toAreaDto(entityList));
     }
 }

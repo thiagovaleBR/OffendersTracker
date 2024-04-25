@@ -3,23 +3,17 @@ package br.com.eletra.offenders.mappers;
 import br.com.eletra.offenders.dtos.common.IdAndNameDto;
 import br.com.eletra.offenders.dtos.line.LineDto;
 import br.com.eletra.offenders.entities.LineEntity;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class LineMapper {
+import java.util.List;
 
-    public LineDto toLineDto(LineEntity lineEntity) {
-        LineDto lineDto = new LineDto();
-        IdAndNameDto idAndNameDto = new IdAndNameDto();
-        idAndNameDto.setId(lineEntity.getId());
-        lineDto.setName(lineEntity.getName());
-        return lineDto;
-    }
+@Mapper (componentModel = "spring")
+public abstract class LineMapper {
 
-    public IdAndNameDto toIdAndNameDto(LineEntity lineEntity) {
-        IdAndNameDto idAndNameDto = new IdAndNameDto();
-        idAndNameDto.setId(lineEntity.getId());
-        idAndNameDto.setName(lineEntity.getName());
-        return idAndNameDto;
-    }
+    public abstract LineDto toLineDto(LineEntity lineEntity);
+
+    public abstract List<LineDto> toLineDto(List<LineEntity> lineEntityList);
+
+    public abstract IdAndNameDto toIdAndNameDto(LineEntity lineEntity);
+
 }

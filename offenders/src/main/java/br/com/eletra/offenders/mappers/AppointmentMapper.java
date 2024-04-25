@@ -14,6 +14,7 @@ public class AppointmentMapper {
 
     private final LineMapper lineMapper;
     private final AreaMapper areaMapper;
+
     public AppointmentDto toAppointmentDto(AppointmentEntity appointmentEntity) {
         AppointmentDto appointmentDto = new AppointmentDto();
         appointmentDto.setId(appointmentEntity.getId());

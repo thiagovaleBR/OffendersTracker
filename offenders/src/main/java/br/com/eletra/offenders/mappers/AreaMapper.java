@@ -3,25 +3,17 @@ package br.com.eletra.offenders.mappers;
 import br.com.eletra.offenders.dtos.area.AreaDto;
 import br.com.eletra.offenders.dtos.common.IdAndNameDto;
 import br.com.eletra.offenders.entities.AreaEntity;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-@RequiredArgsConstructor
-public class AreaMapper {
+import java.util.List;
 
-    public AreaDto toAreaDto(AreaEntity areaEntity) {
-        AreaDto areaDto = new AreaDto();
-        IdAndNameDto idAndNameDto = new IdAndNameDto();
-        idAndNameDto.setId(areaEntity.getId());
-        areaDto.setName(areaEntity.getName());
-        return areaDto;
-    }
+@Mapper(componentModel = "spring")
+public abstract class AreaMapper {
 
-        public IdAndNameDto toIdAndNameDto(AreaEntity areaEntity) {
-        IdAndNameDto idAndNameDto = new IdAndNameDto();
-        idAndNameDto.setId(areaEntity.getId());
-        idAndNameDto.setName(areaEntity.getName());
-        return idAndNameDto;
-    }
+    public abstract AreaDto toAreaDto(AreaEntity areaEntity);
+
+    public abstract List<AreaDto> toAreaDto(List<AreaEntity> areaEntityList);
+
+    public abstract IdAndNameDto toIdAndNameDto (AreaEntity areaEntity);
+
 }

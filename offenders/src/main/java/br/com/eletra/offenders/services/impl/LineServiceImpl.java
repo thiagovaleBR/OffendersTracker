@@ -21,8 +21,8 @@ public class LineServiceImpl implements LineService {
 
     @Override
     public List<LineDto> findAll() {
-        return lineRepository.findAll().stream().map(lineMapper::toLineDto).toList();
-
+        var lines = lineRepository.findAll();
+        return lineMapper.toLineDto(lines);
     }
 
     @Override
