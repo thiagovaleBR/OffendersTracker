@@ -26,7 +26,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentMapper appointmentMapper;
 
     public List<AppointmentDto> findAll() {
-        return appointmentRepository.findAll().stream().map(appointmentMapper::toAppointmentDto).toList();
+        var appointments = appointmentRepository.findAll();
+        return appointmentMapper.toAppointmentDtoList(appointments);
     }
 
     public Optional<AppointmentDto> findById(UUID id) {
@@ -54,9 +55,11 @@ public class AppointmentServiceImpl implements AppointmentService {
             return appointmentMapper.toAppointmentDto(appointment);
         }
     public List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date) {
-        return appointmentRepository.findByLineIdAndDate(lineId, date).stream().map(appointmentMapper::toAppointmentDto).toList();
+        var AppointmentsList = appointmentRepository.findByLineIdAndDate(lineId, date);
+        return appointmentMapper.toAppointmentDtoList(AppointmentsList);
     }
     public List<AppointmentDto> findByDate(LocalDate date) {
-        return appointmentRepository.findByDate(date).stream().map(appointmentMapper::toAppointmentDto).toList();
+        var AppointmentsList = appointmentRepository.findByDate(date);
+        return appointmentMapper.toAppointmentDtoList(AppointmentsList);
     }
 }

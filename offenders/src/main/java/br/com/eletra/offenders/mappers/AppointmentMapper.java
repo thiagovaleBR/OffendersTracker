@@ -5,28 +5,17 @@ import br.com.eletra.offenders.dtos.appointment.CreateAppointmentDto;
 import br.com.eletra.offenders.entities.AppointmentEntity;
 import br.com.eletra.offenders.entities.AreaEntity;
 import br.com.eletra.offenders.entities.LineEntity;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-@RequiredArgsConstructor
-public class AppointmentMapper {
+import java.util.List;
 
-    private final LineMapper lineMapper;
-    private final AreaMapper areaMapper;
-    public AppointmentDto toAppointmentDto(AppointmentEntity appointmentEntity) {
-        AppointmentDto appointmentDto = new AppointmentDto();
-        appointmentDto.setId(appointmentEntity.getId());
-        appointmentDto.setDate(appointmentEntity.getDate());
-        appointmentDto.setLine(lineMapper.toIdAndNameDto(appointmentEntity.getLine()));
-        appointmentDto.setOffender(areaMapper.toIdAndNameDto(appointmentEntity.getOffender()));
-        appointmentDto.setStartTime(appointmentEntity.getStartTime());
-        appointmentDto.setEndTime(appointmentEntity.getEndTime());
-        appointmentDto.setDescription(appointmentEntity.getDescription());
-        appointmentDto.setTicketId(appointmentEntity.getTicketId());
-        appointmentDto.setAppointer(appointmentEntity.getAppointer());
-        return appointmentDto;
-    }
+@Mapper(componentModel = "spring")
+public abstract class AppointmentMapper {
+
+    public abstract AppointmentDto toAppointmentDto(AppointmentEntity appointmentEntity);
+
+    public abstract List<AppointmentDto> toAppointmentDtoList(List<AppointmentEntity> appointmentEntityList);
+
 
     public AppointmentEntity createEntity(CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender) {
         var appointment = new AppointmentEntity();

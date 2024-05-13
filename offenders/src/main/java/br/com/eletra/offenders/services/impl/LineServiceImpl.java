@@ -21,12 +21,13 @@ public class LineServiceImpl implements LineService {
 
     @Override
     public List<LineDto> findAll() {
-        return lineRepository.findAll().stream().map(lineMapper::toLineDto).toList();
-
+        var lines = lineRepository.findAll();
+        return lineMapper.toLineDtoList(lines);
     }
 
     @Override
     public Optional<LineDto> findById(UUID id) {
-        return lineRepository.findById(id).map(lineMapper::toLineDto);
+        var line = lineRepository.findById(id);
+        return Optional.ofNullable(lineMapper.toLineDto(line));
     }
 }
