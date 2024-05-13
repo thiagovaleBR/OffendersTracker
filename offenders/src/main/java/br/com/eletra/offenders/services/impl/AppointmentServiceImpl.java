@@ -31,7 +31,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     public Optional<AppointmentDto> findById(UUID id) {
-        return appointmentRepository.findById(id).map(appointmentMapper::toAppointmentDto);
+        var appointment = appointmentRepository.findById(id);
+        return appointment.map(appointmentMapper::toAppointmentDto);
     }
 
     public AppointmentDto create(CreateAppointmentDto createAppointmentDto) {
