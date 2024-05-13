@@ -22,7 +22,16 @@ public abstract class AppointmentMapper {
         return updateEntity(appointment, createAppointmentDto, line, offender);
     }
 
-    public abstract AppointmentEntity updateEntity(AppointmentEntity appointment, CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender);
-
+    public AppointmentEntity updateEntity (AppointmentEntity appointment, CreateAppointmentDto createAppointmentDto, LineEntity line, AreaEntity offender) {
+        appointment.setDate(createAppointmentDto.getDate());
+        appointment.setLine(line);
+        appointment.setOffender(offender);
+        appointment.setStartTime(createAppointmentDto.getStartTime());
+        appointment.setEndTime(createAppointmentDto.getEndTime());
+        appointment.setDescription(createAppointmentDto.getDescription());
+        appointment.setTicketId(createAppointmentDto.getTicketId());
+        appointment.setAppointer(createAppointmentDto.getAppointer());
+        return appointment;
+    }
 
 }
