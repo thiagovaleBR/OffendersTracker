@@ -17,6 +17,8 @@ public interface AppointmentService {
 
     AppointmentDto update(UUID id, CreateAppointmentDto createAppointmentDto);
 
+    AppointmentDto delete(UUID id);
+
     List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date);
 
     List<AppointmentDto> findByDate(LocalDate date);

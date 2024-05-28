@@ -55,6 +55,13 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointmentRepository.save(appointment);
             return appointmentMapper.toAppointmentDto(appointment);
         }
+
+    public AppointmentDto delete(UUID id) {
+        var appointment = appointmentRepository.findById(id).orElseThrow();
+        appointmentRepository.delete(appointment);
+        return appointmentMapper.toAppointmentDto(appointment);
+    }
+
     public List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date) {
         var AppointmentsList = appointmentRepository.findByLineIdAndDate(lineId, date);
         return appointmentMapper.toAppointmentDtoList(AppointmentsList);
