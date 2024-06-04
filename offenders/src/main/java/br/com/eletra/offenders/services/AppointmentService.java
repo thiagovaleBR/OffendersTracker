@@ -20,4 +20,6 @@ public interface AppointmentService {
     List<AppointmentDto> findByLineAndDate(UUID lineId, LocalDate date);
 
     List<AppointmentDto> findByDate(LocalDate date);
+
+    AppointmentDto delete(UUID id);
 }

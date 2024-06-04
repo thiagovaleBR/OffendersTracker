@@ -59,4 +59,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentDto> findByDate(LocalDate date) {
         return appointmentRepository.findByDate(date).stream().map(appointmentMapper::toAppointmentDto).toList();
     }
+    public AppointmentDto delete(UUID id) {
+        var appointment = appointmentRepository.findById(id).orElseThrow();
+        appointmentRepository.delete(appointment);
+        return appointmentMapper.toAppointmentDto(appointment);
+    }
 }

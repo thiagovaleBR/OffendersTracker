@@ -58,4 +58,11 @@ public class AppointmentController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(appointmentService.update(id, createAppointmentDto));
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        appointmentService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
