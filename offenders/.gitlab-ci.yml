@@ -1,0 +1,58 @@
+image: docker:latest
+
+variables:
+  DOCKER_HOST: unix:///var/run/docker.sock
+
+stages:
+  - test
+  - package
+  - image
+  - deploy
+
+test:
+  stage: test
+  image: maven:3.8.5-openjdk-17
+  retry: 2
+  script:
+    - mvn test
+  tags:
+    - docker
+
+package:
+  stage: package
+  image: maven:3.8.5-openjdk-17
+  retry: 2
+  script:
+    - mvn -DskipTests=true clean package
+  artifacts:
+    paths:
+      - target/*.jar
+  tags:
+    - docker
+
+images:
+  stage: image
+  script:
+    - apk add git
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build -t offenders:latest .
+    - docker push offenders:latest
+  only:
+    - main
+  tags:
+    - docker
+
+deploy:
+  stage: deploy
+  script:
+    - apk add --no-cache curl
+    - apk add --no-cache docker-compose
+    - cp $DC_TICKET_BACKEND docker-compose.yml
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker-compose pull
+    - docker-compose --compatibility up -d
+  when: manual
+  only:
+    - main
+  tags:
+    - shanghai
