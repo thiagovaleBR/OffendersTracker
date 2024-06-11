@@ -37,8 +37,6 @@ images:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t eletraenergy/offenders-backend:latest .
     - docker push eletraenergy/offenders-backend:latest
-  only:
-    - main
   tags:
     - docker
 
@@ -52,7 +50,5 @@ deploy:
     - docker-compose pull
     - docker-compose --compatibility up -d
   when: manual
-  only:
-    - main
   tags:
     - shanghai
