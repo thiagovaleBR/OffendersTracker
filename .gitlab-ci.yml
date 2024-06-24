@@ -17,6 +17,12 @@ test:
     - mvn test
   tags:
     - docker
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - production.manager/target/surefire-reports/TEST-*.xml
+        - production.manager/target/failsafe-reports/TEST-*.xml
 
 package:
   stage: package
