@@ -11,7 +11,7 @@ stages:
 
 test:
   stage: test
-  image: maven:3.8.5-openjdk-17
+  image: eletraenergy/maven:3.8-openjdk-17-slim
   retry: 2
   script:
     - mvn test
@@ -20,7 +20,7 @@ test:
 
 package:
   stage: package
-  image: maven:3.8.5-openjdk-17
+  image: eletraenergy/maven:3.8-openjdk-17-slim
   retry: 2
   script:
     - mvn -DskipTests=true clean package
