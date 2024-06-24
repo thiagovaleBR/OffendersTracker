@@ -1,0 +1,54 @@
+image: docker:latest
+
+variables:
+  DOCKER_HOST: unix:///var/run/docker.sock
+
+stages:
+  - test
+  - package
+  - image
+  - deploy
+
+test:
+  stage: test
+  image: eletraenergy/maven:3.8-openjdk-17-slim
+  retry: 2
+  script:
+    - mvn test
+  tags:
+    - docker
+
+package:
+  stage: package
+  image: eletraenergy/maven:3.8-openjdk-17-slim
+  retry: 2
+  script:
+    - mvn -DskipTests=true clean package
+  artifacts:
+    paths:
+      - target/*.jar
+  tags:
+    - docker
+
+images:
+  stage: image
+  script:
+    - apk add git
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build -t eletraenergy/offenders-backend:latest .
+    - docker push eletraenergy/offenders-backend:latest
+  tags:
+    - docker
+
+deploy:
+  stage: deploy
+  script:
+    - apk add --no-cache curl
+    - apk add --no-cache docker-compose
+    - cp $DC_TICKET_BACKEND docker-compose.yml
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker-compose pull
+    - docker-compose --compatibility up -d
+  when: manual
+  tags:
+    - shanghai
