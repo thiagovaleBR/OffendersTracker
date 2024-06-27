@@ -14,7 +14,7 @@ test:
   image: eletraenergy/maven:3.8-openjdk-17-slim
   retry: 2
   script:
-    - mvn -T 1C test
+    - mvn -T 1C --batch-mode --no-transfer-progress test
   tags:
     - docker
   cache:
