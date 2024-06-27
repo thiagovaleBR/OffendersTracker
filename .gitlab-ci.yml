@@ -9,6 +9,10 @@ stages:
   - image
   - deploy
 
+cache:
+  paths:
+    - .m2/repository
+
 test:
   stage: test
   image: eletraenergy/maven:3.8-openjdk-17-slim
@@ -17,17 +21,19 @@ test:
     - mvn -T 1C --batch-mode --no-transfer-progress test
   tags:
     - docker
-  cache:
-    paths:
-      - .m2/repository
-
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - production.manager/target/surefire-reports/TEST-*.xml
+        - production.manager/target/failsafe-reports/TEST-*.xml
 
 package:
   stage: package
   image: eletraenergy/maven:3.8-openjdk-17-slim
   retry: 2
   script:
-    - mvn -DskipTests=true clean package
+    - mvn -DskipTests=true --batch-mode --no-transfer-progress clean package
   artifacts:
     paths:
       - target/*.jar
