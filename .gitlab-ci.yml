@@ -14,9 +14,12 @@ test:
   image: eletraenergy/maven:3.8-openjdk-17-slim
   retry: 2
   script:
-    - mvn test
+    - mvn -T 1C test
   tags:
     - docker
+  cache:
+    paths:
+      - .m2/repository
 
 
 package:
