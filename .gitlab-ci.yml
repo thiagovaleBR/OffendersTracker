@@ -2,6 +2,9 @@ image: docker:latest
 
 variables:
   DOCKER_HOST: unix:///var/run/docker.sock
+  POSTGRES_DB: offendertracker
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: senha123
 
 stages:
   - test
@@ -12,10 +15,6 @@ stages:
 services:
   - name: postgres:latest
     alias: db
-    variables:
-      POSTGRES_DB: offendertracker
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: senha123
 
 cache:
   paths:
