@@ -65,10 +65,10 @@ deploy:
   script:
     - apk add --no-cache curl
     - apk add --no-cache docker-compose
-    - cp $DC_TICKET_BACKEND docker-compose.yml
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker-compose pull
-    - docker-compose --compatibility up -d
+    - docker-compose -f docker-compose.yml pull
+    - docker-compose -f docker-compose.yml up -d
   when: manual
   tags:
     - shanghai
+
