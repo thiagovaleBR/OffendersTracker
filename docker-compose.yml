@@ -20,13 +20,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  frontend:
-    image: eletraenergy/offenders-frontend
-    ports:
-      - "9444:80"
-    container_name: offender-frontend
-    depends_on:
-      - app
-
 volumes:
   postgres_data:
